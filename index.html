@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Diagnóstico IGreen</title>
+<style>
+body{
+font-family: Arial, sans-serif;
+background: #f2f6f9;
+text-align: center;
+padding: 40px;
+}
+
+.container{
+background: white;
+padding: 30px;
+border-radius: 12px;
+max-width: 400px;
+margin: auto;
+box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2{
+color: #2c3e50;
+}
+
+input{
+width: 90%;
+padding: 12px;
+margin: 10px 0;
+font-size: 16px;
+border-radius: 6px;
+border: 1px solid #ccc;
+}
+
+button{
+width: 95%;
+padding: 12px;
+margin-top: 10px;
+background: #27ae60;
+color: white;
+font-size: 16px;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+}
+
+button:hover{
+background: #219150;
+}
+
+#resultado{
+margin-top: 15px;
+font-size: 14px;
+color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Digite seu CEP</h2>
+
+<input type="text" id="cep" placeholder="Ex: 78700-000" maxlength="9">
+
+<button onclick="buscarCep()">Buscar endereço</button>
+
+<div id="resultado"></div>
+
+<button onclick="continuar()">Continuar</button>
+
+</div>
+
+<script>
+function buscarCep(){
+let cep = document.getElementById("cep").value.replace("-", "");
+
+fetch("https://viacep.com.br/ws/"+cep+"/json/")
+.then(response => response.json())
+.then(data => {
+if(data.erro){
+document.getElementById("resultado").innerHTML = "CEP não encontrado.";
+}else{
+document.getElementById("resultado").innerHTML =
+data.logradouro + ", " + data.bairro + " - " + data.localidade + "/" + data.uf;
+}
+});
+}
+
+function continuar(){
+window.location.href = "https://docs.google.com/forms/d/1ZEtNnVCSeIQuLBPoIaLFnY0li8sp0SUzy8lVtBF__aM/edit";
+}
+</script>
+
+</body>
+</html>
